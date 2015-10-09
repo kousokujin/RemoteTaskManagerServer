@@ -20,7 +20,7 @@ namespace RemoteTaskManagerServer
         {
             tcp.listen();
             string str;
-            str = string.Format("{0},{1}", per.cpu_count(), per.max_mem());
+            str = string.Format("{0},{1},0", per.cpu_count(), per.max_mem());
 
             tcp.send(str);
             network_status_lab.Text = "接続完了";
