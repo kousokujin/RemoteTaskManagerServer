@@ -23,6 +23,15 @@ namespace RemoteTaskManagerServer
             str = string.Format("{0},{1},0", per.cpu_count(), per.max_mem());
 
             tcp.send(str);
+            bool ok = false;
+            while(!ok)
+            {
+                if(tcp.recive() == "OK")
+                {
+                    ok = true;
+                }
+            }
+
             network_status_lab.Text = "接続完了";
             conection = true;
         }
