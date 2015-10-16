@@ -54,12 +54,25 @@ namespace RemoteTaskManagerServer
 
         private void tick_timer_Tick(object sender, EventArgs e)
         {
-            cpu_lab.Text = string.Format("{0}%", per.get_all_cpu());
-            mem_use_lab.Text = string.Format("{0}MB", per.get_use_mem());
+            int cpu = per.get_all_cpu();
+            int mem = per.get_use_mem();
+
+            cpu_lab.Text = string.Format("{0}%", cpu);
+            mem_use_lab.Text = string.Format("{0}MB", mem);
 
             if(conection)
             {
-                string sendstr = per.get_string();
+                string sendstr;
+                //tcp.send(sendstr);
+                //System.Console.WriteLine("send:{0}",sendstr);
+
+                sendstr = string.Format("{0},{1}", mem, cpu);
+                for (int i = 0; i < per.cpu_count(); i++)
+                {
+                    string str = string.Format(",{0}", per.get_thread_cpu(i));
+                    sendstr += str;
+                }
+
                 tcp.send(sendstr);
                 System.Console.WriteLine("send:{0}",sendstr);
             }
